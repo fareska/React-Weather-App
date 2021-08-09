@@ -10,14 +10,6 @@ export default function Favorites() {
     const [favoritesForecast, setFavoritesForecast] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const renderData = () => {
-        return (
-            <div>
-                test
-            </div>
-        )
-    }
-
     useEffect(() => {
         const fetchData = async (cityName) => {
             const res = await axios.get(`https://api.weatherbit.io/v2.0/current?city=${cityName}&key=${process.env.REACT_APP_API_KEY}`);
@@ -38,18 +30,13 @@ export default function Favorites() {
             }
             setFavoritesForecast(data);
             setLoading(false);
-            // renderData();
         }
         fetchFavoritesForecast();
     }, [])
 
     return (
         <div id="favoritesContainer" >
-
-
             {
-                // favoritesForecast.length > 0
-                //     ?
                 loading ? 'loading'
                     : favoritesForecast.map((fav, i) => {
                         { console.log(fav) }
@@ -69,17 +56,7 @@ export default function Favorites() {
                             </Card>
                         )
                     })
-
-                // : 'loading'
             }
         </div>
     )
 }
-
-            // {/* {favorites.map((fav, i) => {
-            //     return (
-            //         <div>
-            //             <p key={i} >{fav}</p>
-            //         </div>
-            //     )
-            // })} */}
