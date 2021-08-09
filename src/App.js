@@ -1,7 +1,7 @@
 import './App.css';
-import Favorites from './Favorites';
-import Navbar from './Navbar';
-import Home from './Home';
+import Navbar from './components/Navbar';
+import Favorites from './components/Favorites';
+import Home from './components/Home';
 
 function App() {
   return (

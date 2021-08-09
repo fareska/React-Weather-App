@@ -38,40 +38,27 @@ export default function Home() {
             const res = await axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&key=${process.env.REACT_APP_API_KEY}&days=5`);
             setForecastData(res.data);
         }
-        const savedRes = JSON.parse(localStorage.getItem('favoritesData'));
+        const savedRes = JSON.parse(localStorage.getItem('favorites' || "[]"));
         fetchData();
-        console.log(savedRes);
+        setFavorites(savedRes);
     }, [cityName]);
-
-    useEffect(() => {
-        const saveFavoritesToLocal = () => {
-            localStorage.setItem('favorites',JSON.stringify(favorites))
-        }
-        if(favorites.length > 0){
-            saveFavoritesToLocal();
-        } 
-
-    }, [favorites])
-
 
     const handleSearchClick = (val) => {
         setCityName(val);
     }
 
-    const isNewCity = (cityName) => {
-        let ans;
-        for (const fav of favorites) {
-            debugger
-            fav === cityName ? ans = false : ans = true ; 
-        }
-        return !ans;
-    }
+    const isNewCity = (cityName) =>  !favorites.includes(cityName);
+    
 
-    const handleSaveClick = (cityName) =>{
-        console.log(isNewCity(forecastData.city_name));
-        // favorites.push(cityName);
-        // let newFav = [...favorites, forecastData.city_name]
-        // setFavorites(newFav);
+    const handleSaveClick =async (cityName) =>{
+        if(isNewCity(forecastData.city_name)){
+            let newFav = [...favorites, ...[forecastData.city_name]];
+            await setFavorites(newFav);
+            //if i console.log favorites here i will see favorites before the value changed .. how can i get the updated favorites ? (callback ?)
+            const savedRes = JSON.parse(localStorage.getItem('favorites' || "[]"));
+            savedRes.push(forecastData.city_name);
+            localStorage.setItem('favorites', JSON.stringify(savedRes));
+        }
     }
 
     return (
