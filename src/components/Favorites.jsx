@@ -45,11 +45,10 @@ export default function Favorites() {
                             <Card key={i} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="holder.js/100px180" />
                                 <Card.Body>
-                                    <Card.Title>{fav.name}</Card.Title>
+                                    <Card.Title>{fav.name + '  ' +fav.temp}<span>&deg;C</span></Card.Title>
                                     <Card.Text>
                                         {fav.description}
-                                        {fav.temp}
-                                        {fav.icon}
+                                        <img style={{height:'30px', width:'30px' }} src={`https://www.weatherbit.io/static/img/icons/${fav.icon}.png`} alt="weatherIcon" />
                                     </Card.Text>
                                     <Button variant="primary">Delete</Button>
                                 </Card.Body>
